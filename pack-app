@@ -1,0 +1,1 @@
+electron-packager ./app SvgScreenshot --platform=darwin --arch=x64 --version=1.0.1 --overwrite
