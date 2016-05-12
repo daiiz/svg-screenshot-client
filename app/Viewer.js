@@ -44,6 +44,7 @@ class Viewer {
         $url[0].dataset.href = pageUrl;
         svgRootTag.setAttributeNS(null, 'title', `${w} x ${h}`);
         $stage[0].appendChild(svgRootTag);
+        window.resizeTo(w + 48, window.outerHeight);
     }
 
     bindEvents () {
