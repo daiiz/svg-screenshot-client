@@ -20,7 +20,8 @@ app.on('ready', () => {
         height: 730,
         titleBarStyle: 'hidden'
     });
-    mainWindow.loadURL('file://' + __dirname + '/index.html');
+    mainWindow.loadURL(`file://${__dirname}/index.html#${(localFilePath || '')}`);
+    mainWindow.openDevTools();
     mainWindow.on('closed', () => {
         mainWindow = null;
     });

@@ -1,37 +1,50 @@
 class Viewer {
-    constructor (shell) {
+    constructor (fs, shell) {
         this.bindEvents();
         this.shell = shell;
         this.pageTitle = "";
         this.isVisibleRect = false;
+        // 「open-file」モードでファイルを与えられた場合はファイルパスを保持
+        this.givenFile = window.location.hash.replace(/^#/, '') || '';
+        //this.givenFile = "/Users/daiki/Desktop/ss-svg/ss_w1016_h394.svg";
+        if (this.givenFile.length > 0) {
+            // TODO: file type 確認
+            fs.readFile(this.givenFile, (err, svgTagTxt) => {
+                this.drawSvg(svgTagTxt);
+            });
+        }
     }
 
     renderSvgFile (f) {
+        var reader = new FileReader();
+        reader.onload = e => {
+            this.drawSvg(reader.result);
+        }
+        // File APIを用いてテキストを読み込む
+        reader.readAsText(f);
+    }
+
+    drawSvg (svgTagTxt) {
         var $stage = $('#main');
         var $title = $('#site-title');
         var $url   = $('#btn-visit-org-site');
         $stage[0].innerHTML = '';
-
-        var reader = new FileReader();
-        reader.onload = e => {
-            $('#hide')[0].innerHTML = reader.result;
-            var svgRootTag = $('.svg-screenshot')[0];
-            var viewbox = svgRootTag.viewBox.baseVal;
-            var w = viewbox.width;
-            var h = viewbox.height;
-            $stage.css({
-                width: w,
-                height: h
-            });
-            var pageUrl = svgRootTag.getAttribute('data-url') || '';
-            this.pageTitle = svgRootTag.getAttribute('data-title') || 'Viewer';
-            $title[0].innerHTML = this.pageTitle;
-            $url[0].dataset.href = pageUrl;
-            svgRootTag.setAttributeNS(null, 'title', `${w} x ${h}`);
-            $stage[0].appendChild(svgRootTag);
-        }
-        // File APIを用いてテキストを読み込む
-        reader.readAsText(f);
+        
+        $('#hide')[0].innerHTML = svgTagTxt;
+        var svgRootTag = $('.svg-screenshot')[0];
+        var viewbox = svgRootTag.viewBox.baseVal;
+        var w = viewbox.width;
+        var h = viewbox.height;
+        $stage.css({
+            width: w,
+            height: h
+        });
+        var pageUrl = svgRootTag.getAttribute('data-url') || '';
+        this.pageTitle = svgRootTag.getAttribute('data-title') || 'Viewer';
+        $title[0].innerHTML = this.pageTitle;
+        $url[0].dataset.href = pageUrl;
+        svgRootTag.setAttributeNS(null, 'title', `${w} x ${h}`);
+        $stage[0].appendChild(svgRootTag);
     }
 
     bindEvents () {
@@ -87,7 +100,7 @@ class Viewer {
         // SVG中のリンクRect要素の表示非表示を切り換える
         $('#btn_toggle_a_rect').on('click', e => {
             var rects = document.querySelectorAll('rect');
-            var $btn = $('#btn_toggle_a_rect');
+            var $btn = $(e.target);
             if (rects.length === 0) return;
             if (!this.isVisibleRect) {
                 // 表示する
