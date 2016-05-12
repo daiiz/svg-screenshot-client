@@ -1,5 +1,13 @@
 body {
     background-color: #f5f5f4;
+    background-color: #e9e7e4;
+    overflow-y: auto;
+}
+
+.toolbar-header {
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
 }
 
 .toolbar-footer {
@@ -13,4 +21,37 @@ body {
     line-height: 21px;
     color: #555;
     font-size: 12px;
+}
+
+#main {
+    position: relative;
+    width: 400px;
+    height: 250px;
+    top: 90px;
+    margin: auto;
+    margin-bottom: 60px;
+    box-shadow: 0px 2px 2px rgba(0,0,0,0.14);
+}
+
+#stage {
+}
+
+a {
+    cursor: pointer;
+}
+
+rect {
+    cursor: pointer;
+}
+
+.title {
+    width: 65%;
+    overflow: hidden;
+}
+
+.visibleRect {
+    fill: rgb(255, 213, 79);
+    stroke-width: 1;
+    stroke: rgb(255, 193, 7);
+    opacity: 0.4;
 }

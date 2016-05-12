@@ -8,9 +8,6 @@ var db = {
     samples: null
 };
 
-console.log(__dirname);
-console.log(userDataDir);
-
 var localFilePath = null;
 app.on('open-file', (ev, path) => {
     ev.preventDefault();

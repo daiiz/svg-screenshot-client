@@ -5,7 +5,6 @@
         <title>SVG Screenshot</title>
         <link rel="stylesheet" href="./node_modules/photon/dist/css/photon.css">
         <link rel="stylesheet" href="./lib/jquery-ui.min.css">
-        <link rel="stylesheet" href="./default-components.css">
         <link rel="stylesheet" href="./index.css">
         <script>
             window.jQuery = window.$ = require('./lib/jquery.js');
@@ -14,23 +13,38 @@
     </head>
     <body>
         <header class="toolbar toolbar-header">
-            <h1 class="title">SVG Screenshot</h1>
+            <center>
+                <h1 class="title" id="site-title">スクリーンショットSVGファイルをドラッグ・アンド・ドロップしてください</h1>
+            </center>
             <div class="toolbar-actions">
-                <!-- top, left, bottom, right の設定 -->
-                <div class="btn-group btns-com-position">
-                    <button class="btn btn-default" data-val="tl">
-                        TL
+                <!--div class="btn-group btns-com-position">
+                    <button class="btn btn-default">
+                        <span class="icon icon-link"></span>
                     </button>
-                    <button class="btn btn-default" data-val="tr">
-                        TR
-                    </button>
-                </div>
+                </div-->
+                <button id="btn_toggle_a_rect" class="btn btn-default" title="埋め込みリンクを表示/非表示">
+                    <span class="icon icon-link"></span>
+                </button>
+                
+                <button id="btn-visit-org-site" data-href="" class="btn btn-default pull-right" title="サイトへ移動">
+                    <span class="icon icon-popup"></span>
+                </button>
             </div>
         </header>
-        
-        <footer class="toolbar toolbar-footer">
-            sあ
-        </footer>
+
+        <div id="stage">
+            <div id="main">
+            <!-- auto -->
+            </div>
+        </div>
+
+        <div id="hide" style="visibility: hidden; width: 2px; height: 2px;">
+        </div>
+
+        <!--footer class="toolbar toolbar-footer">
+            スクリーンショットSVGファイルをドラッグ・アンド・ドロップしてください
+        </footer-->
+
+        <script src="index.js"></script>
     </body>
 </html>
-    
