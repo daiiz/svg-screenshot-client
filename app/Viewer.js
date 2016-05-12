@@ -6,7 +6,6 @@ class Viewer {
         this.isVisibleRect = false;
         // 「open-file」モードでファイルを与えられた場合はファイルパスを保持
         this.givenFile = window.location.hash.replace(/^#/, '') || '';
-        //this.givenFile = "/Users/daiki/Desktop/ss-svg/ss_w1016_h394.svg";
         if (this.givenFile.length > 0) {
             // TODO: file type 確認
             fs.readFile(this.givenFile, (err, svgTagTxt) => {
@@ -27,7 +26,7 @@ class Viewer {
     drawSvg (svgTagTxt) {
         var $stage = $('#main');
         var $title = $('#site-title');
-        var $url   = $('#btn-visit-org-site');
+        var $url   = $('.btn-visit-org-site');
         $stage[0].innerHTML = '';
         
         $('#hide')[0].innerHTML = svgTagTxt;
@@ -68,14 +67,6 @@ class Viewer {
             return false;
         });
 
-        $('#btn-visit-org-site').on('click', e => {
-            var href = $(e.target).attr('data-href') || "";
-            if (href.length > 0) {
-                this.shell.openExternal(href);
-            }
-            return false;
-        });
-
         // aタグをクリックされたときに外部ブラウザで開くようにオーバーライドする
         $("#main").on('click', 'a', e => {
             e.preventDefault();
@@ -97,10 +88,18 @@ class Viewer {
             $title[0].innerHTML = this.pageTitle;
         });
 
+        $(".btn-visit-org-site").on('click', e => {
+            var href = $(e.target).closest(".btn-visit-org-site").attr('data-href') || "";
+            if (href.length > 0) {
+                this.shell.openExternal(href);
+            }
+            return false;
+        });
+        
         // SVG中のリンクRect要素の表示非表示を切り換える
-        $('#btn_toggle_a_rect').on('click', e => {
+        $(".btn_toggle_a_rect").on('click', e => {
             var rects = document.querySelectorAll('rect');
-            var $btn = $(e.target);
+            var $btn = $(e.target).closest('.btn_toggle_a_rect');
             if (rects.length === 0) return;
             if (!this.isVisibleRect) {
                 // 表示する

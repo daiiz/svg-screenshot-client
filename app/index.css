@@ -55,3 +55,7 @@ rect {
     stroke: rgb(255, 193, 7);
     opacity: 0.4;
 }
+
+.btn, .icon {
+    cursor: pointer;
+}
