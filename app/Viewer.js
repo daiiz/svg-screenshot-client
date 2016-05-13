@@ -44,7 +44,11 @@ class Viewer {
         $url[0].dataset.href = pageUrl;
         svgRootTag.setAttributeNS(null, 'title', `${w} x ${h}`);
         $stage[0].appendChild(svgRootTag);
-        window.resizeTo(w + 48, window.outerHeight);
+
+        // TODO: リサイズ時にtop値を計算
+        var width  = Math.min(w, screen.width - 60);
+        var height = Math.min(h + 59, screen.height - 80);
+        window.resizeTo(width, height);
     }
 
     bindEvents () {
