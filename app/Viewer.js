@@ -4,6 +4,7 @@ class Viewer {
         this.shell = shell;
         this.pageTitle = "";
         this.isVisibleRect = false;
+        this.svgRefreshed = true;
         // 「open-file」モードでファイルを与えられた場合はファイルパスを保持
         this.givenFile = window.location.hash.replace(/^#/, '') || '';
         if (this.givenFile.length > 0) {
@@ -44,10 +45,19 @@ class Viewer {
         $url[0].dataset.href = pageUrl;
         svgRootTag.setAttributeNS(null, 'title', `${w} x ${h}`);
         $stage[0].appendChild(svgRootTag);
+        this.setWindowSize(w, h);
+    }
 
+    setWindowSize (w, h) {
         // TODO: リサイズ時にtop値を計算
-        var width  = Math.min(w, screen.width - 60);
-        var height = Math.min(h + 59, screen.height - 80);
+        var width = Math.min(w, screen.width - 60);
+        var height = Math.min(h + 55, screen.height - 80);
+        this.svgRefreshed = true;
+        if (h + 55 < screen.height - 80) {
+            $('body').css({'overflow-y': 'hidden'});
+        }else {
+            $('body').css({'overflow-y': 'auto'});
+        }
         window.resizeTo(width, height);
     }
 
@@ -61,7 +71,7 @@ class Viewer {
 
             // 複数与えられた場合でも，読み込むのは最初のファイルのみ
             var file = files[0];
-            if (file.type.match('image/svg+xml') == -1) return false;
+            if (file.type.match('image/svg+xml') === -1) return false;
             this.renderSvgFile(file);
 
         }).bind('dragenter', e => {
@@ -122,6 +132,14 @@ class Viewer {
                 }
                 this.isVisibleRect = false;
                 $btn.removeClass('active');
+            }
+        });
+
+        $(window).on('resize', e => {
+            if (!this.svgRefreshed) {
+                $('body').css({'overflow-y': 'auto'});
+            }else {
+                this.svgRefreshed = false;
             }
         });
     }
