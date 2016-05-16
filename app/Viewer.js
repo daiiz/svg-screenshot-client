@@ -1,17 +1,22 @@
+const mime = require('mime');
+const fs = require('fs');
+const shell  = require('electron').shell;
+
 class Viewer {
-    constructor (fs, shell) {
+    constructor () {
         this.bindEvents();
-        this.shell = shell;
         this.pageTitle = "";
         this.isVisibleRect = false;
         this.svgRefreshed = true;
         // 「open-file」モードでファイルを与えられた場合はファイルパスを保持
-        this.givenFile = window.location.hash.replace(/^#/, '') || '';
-        if (this.givenFile.length > 0) {
-            // TODO: file type 確認
-            fs.readFile(this.givenFile, (err, svgTagTxt) => {
-                this.drawSvg(svgTagTxt);
-            });
+        this.givenFilePath = window.location.hash.replace(/^#/, '') || '';
+        if (this.givenFilePath.length > 0) {
+            console.info(mime.lookup(this.givenFilePath));
+            if (mime.lookup(this.givenFilePath) === 'image/svg+xml') {
+                fs.readFile(this.givenFilePath, (err, svgTagTxt) => {
+                    this.drawSvg(svgTagTxt);
+                });  
+            }
         }
     }
 
@@ -68,7 +73,7 @@ class Viewer {
             var files = e.originalEvent.dataTransfer.files;
             var reader = new FileReader();
             if (files.length <= 0) return false;
-
+            
             // 複数与えられた場合でも，読み込むのは最初のファイルのみ
             var file = files[0];
             if (file.type.match('image/svg+xml') === -1) return false;
@@ -87,7 +92,7 @@ class Viewer {
             e.preventDefault();
             var $a = $(e.target).closest('a');
             var href = $a[0].href.baseVal;
-            this.shell.openExternal(href);   
+            shell.openExternal(href);   
             return false;
         });
 
@@ -106,7 +111,7 @@ class Viewer {
         $(".btn-visit-org-site").on('click', e => {
             var href = $(e.target).closest(".btn-visit-org-site").attr('data-href') || "";
             if (href.length > 0) {
-                this.shell.openExternal(href);
+                shell.openExternal(href);
             }
             return false;
         });
