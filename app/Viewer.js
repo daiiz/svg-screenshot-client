@@ -87,6 +87,19 @@ class Viewer {
             return false;
         });
 
+        $(".btn-visit-org-site").on("mouseover", e => {
+            var $title = $('#site-title');
+            var href = $(e.target).attr('data-href') || '';
+            if (href.length > 0) {
+                $title[0].innerHTML = href;
+            }
+        });
+
+        $(".btn-visit-org-site").on("mouseleave", e => {
+            var $title = $('#site-title');
+            $title[0].innerHTML = this.pageTitle;
+        });
+
         // aタグをクリックされたときに外部ブラウザで開くようにオーバーライドする
         $("#main").on('click', 'a', e => {
             e.preventDefault();
@@ -96,6 +109,7 @@ class Viewer {
             return false;
         });
 
+        // スクリーンショットに含まれるa.rectがホバーされたら，リンク先URLを表示
         $("#main").on('mouseover', 'a', e => {
             var $title = $('#site-title');
             var $a = $(e.target).closest('a');
