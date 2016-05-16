@@ -37,7 +37,6 @@ var openBrowserWindow = (givenFilePath) => {
         titleBarStyle: 'hidden'
     });
     bw.loadURL(`file://${__dirname}/index.html#${(givenFilePath || '')}`);
-    bw.openDevTools();
     bw.on('closed', () => {
         bw = null;
     });

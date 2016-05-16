@@ -76,7 +76,7 @@ class Viewer {
             
             // 複数与えられた場合でも，読み込むのは最初のファイルのみ
             var file = files[0];
-            if (file.type.match('image/svg+xml') === -1) return false;
+            if (file.type !== 'image/svg+xml') return false;
             this.renderSvgFile(file);
 
         }).bind('dragenter', e => {
