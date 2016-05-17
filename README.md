@@ -1,6 +1,11 @@
 # svg-screenshot-client
 The Electron App for [daiz713/svg-screenshot](https://github.com/daiz713/svg-screenshot)
 
+### Get
+```
+$ git clone git@github.com:daiz713/svg-screenshot-client.git
+```
+
 ### Setup
 ```
 $ cd svg-screenshot-client/app/
