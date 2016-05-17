@@ -2,7 +2,7 @@
 The Electron App for [daiz713/svg-screenshot](https://github.com/daiz713/svg-screenshot)
 
 ### Get
-If you have not installed `electron` yet, at first, it is need to execute in the following command.
+If you have not installed `electron` yet, at first, it is need to execute in the following commands.
 ```
 $ npm install -g electron-prebuilt
 $ npm install -g electron-packager
